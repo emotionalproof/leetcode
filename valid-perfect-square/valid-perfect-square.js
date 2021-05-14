@@ -3,14 +3,20 @@
  * @return {boolean}
  */
 var isPerfectSquare = function(num) {
-    if (num < 2) return true
-    let i = 2
-    let count = 0
-    while (i * i <= num) {
-        count++
-        if (i * i === num) return true
-        i++
-        console.log(count)
+    let min = 0
+    let max = 2**16
+    let mid = Math.floor((min + max)/2)
+
+    while (min < max) {
+        if (mid * mid === num) {
+            break
+        } else if (mid * mid > num) {
+            max = mid - 1    
+        } else if (mid * mid < num) {
+            min = mid + 1
+        }
+        mid = Math.floor((min + max)/2)
     }
-    return false
+
+   return  mid * mid === num ? true : false
 };
