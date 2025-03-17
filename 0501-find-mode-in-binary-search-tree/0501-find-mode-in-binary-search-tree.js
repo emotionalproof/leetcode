@@ -10,21 +10,16 @@
  * @param {TreeNode} root
  * @return {number[]}
  */
-var findMode = function(root) {
+
+ var findMode = function(root) {
     if (!root) return null;
-    let current = root;
-    let stack = [];
-    let result = [];
+    let stack = [root];
     let count = {}
     let modes = {}
     let maxCount = 0
-    while (current || stack.length) {
-        while (current) {
-            stack.push(current);
-            current = current.left
-        }
-        current = stack.pop();
-        if (count[current.val]) {
+    while (stack.length) {
+        let current = stack.pop();
+         if (count[current.val]) {
             count[current.val]++
         } else {
             count[current.val] = 1;
@@ -37,7 +32,8 @@ var findMode = function(root) {
             modes[currentCount] = [current.val]
         }
         maxCount = Math.max(maxCount, currentCount)
-        current = current.right;
+        if (current.right) stack.push(current.right)
+        if (current.left) stack.push(current.left)
     }
-    return modes[maxCount];
-};
+    return modes[maxCount]
+ }
