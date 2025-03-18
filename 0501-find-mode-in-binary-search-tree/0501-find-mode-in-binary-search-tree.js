@@ -12,29 +12,30 @@
  */
 
  var findMode = function(root) {
-    if (!root) return null;
-    let stack = [root];
-    let count = {}
-    let mode = []
-    let maxCount = 0
-    while (stack.length) {
-        let current = stack.pop();
-         if (count[current.val]) {
-            count[current.val]++
+    let currentVal = null;
+    let currentCount = 0;
+    let maxCount = 0;
+    let modes = []
+    const inOrder = (node) => {
+        if (!node) return
+        inOrder(node.left)
+        // Process current node
+        if (node.val === currentVal) {
+            currentCount++;
         } else {
-            count[current.val] = 1;
+            currentVal = node.val;
+            currentCount = 1;
         }
-        
-        let currentCount = count[current.val]
+
+        // Update mode(s)
         if (currentCount > maxCount) {
-            mode = [current.val]
             maxCount = currentCount;
+            modes = [node.val]; // Reset mode list
         } else if (currentCount === maxCount) {
-            mode.push(current.val)
+            modes.push(node.val);
         }
-       
-        if (current.right) stack.push(current.right)
-        if (current.left) stack.push(current.left)
+        inOrder(node.right)
     }
-    return mode
+    inOrder(root);
+    return modes
  }
