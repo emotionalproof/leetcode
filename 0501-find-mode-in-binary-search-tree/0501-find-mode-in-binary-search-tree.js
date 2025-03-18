@@ -16,6 +16,7 @@
     let stack = [root];
     let count = {}
     let modes = {}
+    let mode = []
     let maxCount = 0
     while (stack.length) {
         let current = stack.pop();
@@ -26,14 +27,15 @@
         }
         
         let currentCount = count[current.val]
-        if (modes[currentCount]) {
-            modes[currentCount].push(current.val)
-        } else {
-            modes[currentCount] = [current.val]
+        if (currentCount > maxCount) {
+            mode = [current.val]
+            maxCount = currentCount;
+        } else if (currentCount === maxCount) {
+            mode.push(current.val)
         }
-        maxCount = Math.max(maxCount, currentCount)
+       
         if (current.right) stack.push(current.right)
         if (current.left) stack.push(current.left)
     }
-    return modes[maxCount]
+    return mode
  }
