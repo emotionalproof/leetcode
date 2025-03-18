@@ -15,7 +15,6 @@
     if (!root) return null;
     let stack = [root];
     let count = {}
-    let modes = {}
     let mode = []
     let maxCount = 0
     while (stack.length) {
